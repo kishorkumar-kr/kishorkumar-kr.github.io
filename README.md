@@ -19,7 +19,7 @@ To add a résumé button, put the PDF in `public/` and set `links.resume` (e.g. 
 ```bash
 npm install
 npm run dev      # http://localhost:4321
-npm run build    # outputs to dist/
+npm run build
 ```
 
 ## Deploy to GitHub Pages
