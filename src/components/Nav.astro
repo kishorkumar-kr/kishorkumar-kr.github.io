@@ -1,0 +1,23 @@
+---
+const words = 'LET\u2019S TALK';
+---
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#contact" class="status" aria-label="Hiring? Let's talk. Go to contact" data-status>
+      <span class="st-l">Hiring?</span>
+      <span class="type" data-type aria-hidden="true">
+        {[...words].map((c) => c === ' ' ? <span class="gap" /> : <i>{c}</i>)}
+      </span>
+    </a>
+    <div class="mode" role="radiogroup" aria-label="Choose an edition">
+      <span class="mode-label">Edition</span>
+      <button role="radio" aria-checked="true" data-mode-btn="plain">Plain<span class="lg">&nbsp;English</span></button>
+      <button role="radio" aria-checked="false" data-mode-btn="tech">Tech<span class="lg">nical</span></button>
+      <i class="mode-thumb" aria-hidden="true"></i>
+    </div>
+    <div class="nav-right">
+      <span class="clock" aria-label="Kishor's local time"><span data-clock>--:--</span> IST</span>
+      <a href="#contact" class="nav-cta">Contact →</a>
+    </div>
+  </div>
+</header>

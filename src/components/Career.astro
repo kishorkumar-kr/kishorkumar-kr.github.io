@@ -1,0 +1,31 @@
+---
+import Dual from './Dual.astro';
+import { jobs } from '../data/profile';
+---
+<section id="work" class="sec wrap">
+  <header class="sec-head">
+    <p class="sec-n">02 · Work history</p>
+    <h2 class="sec-title">Three companies. <em>Real results.</em></h2>
+  </header>
+
+  <div class="jobs">
+    {jobs.map((j, i) => (
+      <article class="job" data-job>
+        <div class="job-meta">
+          <p class="job-when">{j.from} – {j.to}</p>
+          {j.to === 'Present' && <p class="job-now">Current role</p>}
+          <h3 class="job-co">{j.company}</h3>
+          <p class="job-role">{j.role}</p>
+          <p class="job-field">{j.field}</p>
+        </div>
+        <div class="job-body">
+          <Dual as="h4" class="job-head" plain={j.headline.plain} tech={j.headline.tech} />
+          <ul class={`job-points ${i === 0 ? 'cols' : ''}`}>
+            {j.points.map((p) => <li><Dual plain={p.plain} tech={p.tech} /></li>)}
+          </ul>
+          <p class="job-stack"><span>Tools used</span>{j.stack.join(' · ')}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

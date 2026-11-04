@@ -1,0 +1,29 @@
+---
+import { education, compliance } from '../data/profile';
+---
+<section id="notices" class="sec wrap">
+  <header class="sec-head">
+    <p class="sec-n">05 · Notices</p>
+    <h2 class="sec-title">Education <em>&amp; the fine print.</em></h2>
+  </header>
+  <div class="notices">
+    <div class="notice-col">
+      <h3 class="notice-h">Education</h3>
+      {education.map((e) => (
+        <div class="edu" data-notice>
+          <p class="edu-years">{e.years}</p>
+          <h4>{e.degree}</h4>
+          <p>{e.school}</p>
+          <p class="edu-score">{e.score}</p>
+        </div>
+      ))}
+    </div>
+    <div class="notice-col fine">
+      <h3 class="notice-h">The fine print</h3>
+      <p class="fine-intro">The privacy and security rules my work follows, in plain words.</p>
+      {compliance.map((c) => (
+        <p class="fine-item" data-notice><b>{c.name}</b>{c.plain}</p>
+      ))}
+    </div>
+  </div>
+</section>

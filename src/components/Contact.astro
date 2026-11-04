@@ -1,0 +1,32 @@
+---
+import Glyph from './Glyph.astro';
+import { profile } from '../data/profile';
+const { email, linkedin, github, resume } = profile.links;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="sec contact" id="contact">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-n">06 · Letters</p>
+      <h2 class="sec-title">Hiring, or building something? <em>Write to me.</em></h2>
+    </header>
+    <div class="letter" data-letter>
+      {email && (
+        <div class="letter-mail">
+          <p class="letter-label">Email, usually answered within a day</p>
+          <a class="letter-addr" href={`mailto:${email}`}>{email}</a>
+          <button class="copy" type="button" data-copy={email}>Copy address</button>
+        </div>
+      )}
+      <div class="letter-links">
+        {linkedin && <a href={linkedin} target="_blank" rel="noopener"><Glyph name="linkedin" size={18} /> LinkedIn</a>}
+        {github && <a href={github} target="_blank" rel="noopener"><Glyph name="github" size={18} /> GitHub</a>}
+        {resume && <a href={`${base}/${resume}`} download><Glyph name="file" size={18} /> Résumé (PDF)</a>}
+      </div>
+    </div>
+  </div>
+  <footer class="wrap foot">
+    <span>© {new Date().getFullYear()} {profile.name} · {profile.role}</span>
+    <span>Printed with Astro &amp; GSAP. No trees harmed.</span>
+  </footer>
+</section>
