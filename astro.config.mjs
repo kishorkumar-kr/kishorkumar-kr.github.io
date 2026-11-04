@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config';
 //  - Project site (any other repo name): set BASE to '/<repo-name>'.
 // The deploy workflow sets these automatically from the repo name.
 export default defineConfig({
-  site: process.env.SITE ?? 'https://example.github.io',
+  site: 'https://kishorkumar-kr.github.io',
   base: process.env.BASE ?? '/',
   output: 'static',
 });
