@@ -1,0 +1,6 @@
+---
+// Shows `plain` to everyone and `tech` when the reader switches to engineer mode.
+interface Props { plain: string; tech: string; as?: string; class?: string; [key: string]: unknown }
+const { plain, tech, as: Tag = 'span', class: cls = '', ...rest } = Astro.props;
+---
+<Tag class={`dual ${cls}`} {...rest}><span class="v-plain">{plain}</span><span class="v-tech">{tech}</span></Tag>

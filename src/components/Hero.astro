@@ -1,0 +1,163 @@
+---
+import Dual from './Dual.astro';
+import { profile, numbers, live } from '../data/profile';
+const { links } = profile;
+const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const index = [
+  ['Work history', 'Three companies, real results', '#work'],
+  ['Explainer', 'What happens when you tap “Pay”', '#explainer'],
+  ['Classifieds', 'Every skill, explained in one line', '#skills'],
+  ['Notices', 'Education & privacy rules', '#notices'],
+  ['Letters', 'How to reach me', '#contact'],
+];
+const ticker = [...live, ...live];
+const [first, ...rest] = profile.name.split(' ');
+const initials = rest.join('.') + '.';
+
+// crossword title: name across, "ENGR" down through the first R, initials across
+type Cell = { c: string; col: number; row: number; n?: number; hot?: boolean; o: number };
+const cells: Cell[] = [
+  ...[...'KISHORKUMAR'].map((c, i) => ({ c, col: i + 1, row: 4, n: i === 0 ? 1 : undefined, hot: i === 5, o: i })),
+  ...[...'ENG'].map((c, i) => ({ c, col: 6, row: i + 1, n: i === 0 ? 2 : undefined, o: 11 + i })),
+  ...[...'KR'].map((c, i) => ({ c, col: 13 + i, row: 4, n: i === 0 ? 3 : undefined, o: 14 + i })),
+];
+---
+<section id="top" class="front wrap">
+  <div class="dateline" data-rise>
+    <span class="hide-sm">Vol. {profile.years} · Est. {profile.since}</span>
+    <span data-today>{today}</span>
+    <span class="hide-sm">Free edition</span>
+  </div>
+  {profile.nameplate === 'clipping' ? (
+    <div class="cl">
+      <div class="cl-paper" data-clip>
+        <span class="cl-tape" aria-hidden="true" data-tape></span>
+        <p class="cl-k">Featured engineer · Profile</p>
+        <h1 class="cl-name">{profile.name}</h1>
+        <p class="cl-sub">{profile.role}, building the systems behind apps since {profile.since.split(' ')[1]}.</p>
+      </div>
+    </div>
+  ) : profile.nameplate === 'poster' ? (
+    <div class="po">
+      <h1 class="po-name" aria-label={profile.name} data-po>
+        <span class="po-w" aria-hidden="true">Kishor</span>
+        <span class="po-w po-red" aria-hidden="true">kumar</span>
+        <span class="po-w" aria-hidden="true">{rest.map((x) => `${x}.`).join('')}</span>
+      </h1>
+      <div class="po-bar" data-rise>
+        <span>{profile.role}</span>
+        <i class="po-code" aria-hidden="true" data-po-code></i>
+        <span>Backend · Full-stack · Since {profile.since.split(' ')[1]}</span>
+      </div>
+    </div>
+  ) : profile.nameplate === 'editorial' ? (
+    <div class="ed">
+      <h1 class="ed-name" aria-label={profile.name}><span class="ed-n" data-ed aria-hidden="true">{first}</span></h1>
+      <aside class="ed-side" data-ed-side>
+        <i class="ed-bar" aria-hidden="true"></i>
+        <b>{rest.map((x) => `${x}.`).join(' ')}</b>
+        <span>{profile.role}</span>
+        <span class="ed-m">{profile.years}+ years · Backend &amp; full-stack</span>
+      </aside>
+    </div>
+  ) : profile.nameplate === 'times' ? (
+    <div class="tt">
+      <h1 class="tt-title" data-times>
+        <span class="tt-the">The</span>
+        <span class="tt-main" aria-hidden="true">{[...`${profile.short} Times`].map((c) => <span class="tt-m"><span class="tt-c">{c === ' ' ? ' ' : c}</span></span>)}</span>
+        <span class="sr">The {profile.short} Times: the portfolio of {profile.name}</span>
+      </h1>
+      <p class="tt-by" data-tt-by>Edited &amp; engineered by <b>{profile.name}</b></p>
+    </div>
+  ) : profile.nameplate === 'crossword' ? (
+    <div class="xw">
+      <h1 class="xw-grid" aria-label={profile.name} data-xw>
+        {cells.map((x) => (
+          <span class:list={['xw-cell', { hot: x.hot }]} style={`grid-column:${x.col};grid-row:${x.row}`} data-o={x.o} data-n={x.n} aria-hidden="true">
+            <b>{x.c}</b>
+          </span>
+        ))}
+      </h1>
+      <div class="xw-clues" data-rise>
+        <p class="xw-h">Today’s puzzle</p>
+        <p><b>1 Across</b>Builds the engine behind apps (11)</p>
+        <p><b>2 Down</b>Job title, in short (4)</p>
+        <p><b>3 Across</b>Initials (2)</p>
+        <p class="xw-sol">Solved: <em>{profile.name}, {profile.role}</em></p>
+      </div>
+    </div>
+  ) : profile.nameplate === 'classic' ? (
+    <h1 class="nameplate" data-nameplate aria-label={profile.name}>{profile.name}</h1>
+  ) : (
+    <div class="np">
+      <div class="ear">
+        <span class="ear-k">Today’s focus</span>
+        <b>Backend systems that scale</b>
+      </div>
+      <h1 class="np-name" aria-label={profile.name}>
+        <span class="np-ink" data-press>{first}<em>{initials}</em></span>
+      </h1>
+      <div class="ear ear-r">
+        <span class="ear-k">Price</span>
+        <b>One conversation</b>
+      </div>
+    </div>
+  )}
+  <div class="subline" data-rise>
+    {['editorial', 'poster', 'clipping'].includes(profile.nameplate) ? (
+      <>
+        <span>Healthcare · Ad-tech · Ed-tech</span>
+        <span class="hide-sm">Building since {profile.since}</span>
+      </>
+    ) : (
+      <>
+        <span>{profile.role}</span>
+        <span>{profile.years}+ years of experience</span>
+        <span class="hide-sm">Healthcare · Ad-tech · Ed-tech</span>
+      </>
+    )}
+  </div>
+
+  <div class="front-grid">
+    <article class="lead">
+      <p class="kicker" data-rise>Profile · In my own words</p>
+      <Dual as="h2" class="headline" data-rise plain={profile.headline.plain} tech={profile.headline.tech} />
+      <Dual as="p" class="lede" data-rise plain={profile.summary.plain} tech={profile.summary.tech} />
+      <div class="cta" data-rise>
+        {links.email && <a class="btn btn-ink" href={`mailto:${links.email}`}>Email me</a>}
+        {links.resume
+          ? <a class="btn btn-line" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/${links.resume}`} download>Download résumé</a>
+          : <a class="btn btn-line" href="#work">Read my work history ↓</a>}
+      </div>
+    </article>
+
+    <aside class="index" data-rise aria-label="In this edition">
+      <p class="index-h">In this edition</p>
+      <ol>
+        {index.map(([t, d, href], i) => (
+          <li><a href={href}><span class="index-n">{String(i + 2).padStart(2, '0')}</span><span><b>{t}</b><small>{d}</small></span></a></li>
+        ))}
+      </ol>
+    </aside>
+
+    <div class="stamp" data-stamp aria-hidden="true"><span>Available</span><b>for hire</b></div>
+  </div>
+
+  <dl class="numbers">
+    {numbers.map((n) => (
+      <div class="num" data-num>
+        <dt><span data-count={n.value}>{n.value}</span>{n.suffix}</dt>
+        <dd><b>{n.label}</b><span>{n.note}</span></dd>
+      </div>
+    ))}
+  </dl>
+</section>
+
+<div class="ticker" aria-label="Things my code does every day">
+  <span class="ticker-tag">Live</span>
+  <div class="ticker-track" data-ticker>
+    {ticker.map((n) => (
+      <span class="tick"><b>{n.title}</b><em>{n.tool}</em></span>
+    ))}
+  </div>
+</div>

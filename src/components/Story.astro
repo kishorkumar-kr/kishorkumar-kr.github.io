@@ -1,0 +1,25 @@
+---
+import Dual from './Dual.astro';
+import Glyph from './Glyph.astro';
+import { story } from '../data/profile';
+---
+<section id="explainer" class="sec explainer">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-n">03 · Explainer</p>
+      <h2 class="sec-title">What happens when you tap <mark>“Pay”</mark>?</h2>
+      <p class="sec-sub">Six things happen in about a second. I build every one of them.</p>
+    </header>
+    <ol class="strip" data-strip>
+      <i class="strip-line" aria-hidden="true"><i data-strip-fill></i></i>
+      {story.map((s, i) => (
+        <li class="panel" data-panel>
+          <span class="panel-ico"><Glyph name={s.icon} size={22} /></span>
+          <span class="panel-n">{i + 1}</span>
+          <h3>{s.title}</h3>
+          <Dual as="p" plain={s.plain} tech={s.tech} />
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

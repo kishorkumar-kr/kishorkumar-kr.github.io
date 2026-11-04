@@ -1,0 +1,30 @@
+---
+import Dual from './Dual.astro';
+import { groups, totalSkills, profile } from '../data/profile';
+---
+<section id="skills" class="sec wrap">
+  <header class="sec-head">
+    <p class="sec-n">04 · Classifieds</p>
+    <h2 class="sec-title">{totalSkills} skills, <em>each explained in one line.</em></h2>
+    <p class="sec-sub">Tap any tool to see what it is.</p>
+  </header>
+
+  <div class="classifieds">
+    {groups.map((g) => (
+      <div class="ad" data-group>
+        <Dual as="h3" class="ad-h" plain={g.plain} tech={g.tech} />
+        <div class="ad-tools">
+          {g.items.map((s) => (
+            <button class="tool" type="button" aria-expanded="false" data-desc={s.desc}>{s.name}</button>
+          ))}
+        </div>
+        <p class="explain" data-explain aria-live="polite"><span>Tap a tool to see what it is.</span></p>
+      </div>
+    ))}
+    <a class="ad wanted" href={profile.links.email ? `mailto:${profile.links.email}` : '#contact'} data-group-cta>
+      <p class="ad-h">Work with me</p>
+      <p class="wanted-t">Open to software engineering roles, especially backend work on payments, messaging, video and data.</p>
+      <p class="wanted-s">Get in touch →</p>
+    </a>
+  </div>
+</section>
